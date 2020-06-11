@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'api',
     'core',
     'user',
+    'recipe',
     
     ### THIRD PARTY APPLICATIONS ###
     'rest_framework',
