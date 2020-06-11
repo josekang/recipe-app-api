@@ -1,5 +1,5 @@
 FROM python:3.7-alpine
-MAINTAINER Rumbish
+MAINTAINER Wamugi Joseph Kangethe
 
 ENV PYTHONUNBUFFERED 1
 
