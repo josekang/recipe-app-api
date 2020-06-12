@@ -19,9 +19,9 @@ class TagViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateMo
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+         
         
-        
-class IngredientViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+class IngredientViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin):
     queryset = Ingredient.objects.all()
     serializer_class = serializers.IngredientSerializer
     permission_classes = (IsAuthenticated,)
@@ -29,4 +29,7 @@ class IngredientViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
     
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user).order_by('-name')
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
     
