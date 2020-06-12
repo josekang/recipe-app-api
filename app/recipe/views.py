@@ -7,29 +7,25 @@ from recipe import serializers
 
 # Create your views here.
 
-class TagViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin):
+
+class BaseRecipeAttrViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin):
+    
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user).order_by('-name')
+    
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+    
+
+class TagViewSet(BaseRecipeAttrViewSet):
     
     queryset = Tag.objects.all()
     serializer_class = serializers.TagSerializer
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
-    
-    def get_queryset(self):
-        return self.queryset.filter(user=self.request.user).order_by('-name')
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
          
         
-class IngredientViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.CreateModelMixin):
+class IngredientViewSet(BaseRecipeAttrViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = serializers.IngredientSerializer
-    permission_classes = (IsAuthenticated,)
-    authentication_classes = (TokenAuthentication,)
-    
-    def get_queryset(self):
-        return self.queryset.filter(user=self.request.user).order_by('-name')
-    
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-    
