@@ -9,7 +9,7 @@ from django.conf import settings
 
 def recipe_image_file_path(instance, filename):
     ext = filename.split('.')[-1]
-    filename = f'{uuid.uuid4()}.{exit}'
+    filename = f'{uuid.uuid4()}.{ext}'
     
     return os.path.join('uploads/recipe/', filename)
 
