@@ -7,17 +7,27 @@ class TagSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Tag
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'user')
         read_only_fields = ('id', )
+    
+    
+    # def create(self, validated_data):
+    #     raise ValueError(validated_data)
+    
         
 
 class IngredientSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Ingredient
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'user')
         read_only_fields = ('id',)
         
+    # def create(self, validated_data):
+    # #     obj = Ingredient.objects.create(**validated_data)
+    # #     obj.save(name=validated_data['name'])
+    # #     return obj
+    #     raise ValueError(validated_data)
 
 class RecipeSerializer(serializers.ModelSerializer):
     ingredients = serializers.PrimaryKeyRelatedField(
@@ -32,7 +42,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = (
-                    'id', 
+                    'id', 'user',
                     'title', 'ingredients', 'tags', 'time_minutes', 'price', 'link'
                 )
         read_only_fields = ('id',)
